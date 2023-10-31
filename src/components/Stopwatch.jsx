@@ -143,13 +143,13 @@ const Stopwatch = () => {
   //   }, []);
   return (
     <div className="w-full">
-      <h1>
+      <h1 className="text-5xl">
         {/* {hour < 10 ? "0" + hour : hour}:{minute < 10 ? "0" + minute : minute}: */}
         {/* {second < 10 ? "0" + second : second}  */}
         {str}
       </h1>
       <br />
-      <div className="flex justify-center">
+      <div className="flex justify-center ">
         {/* {(hour!=0||minute!=0||second!=0) && <Button onClick={refreshStopwatch}>Refresh</Button>} */}
         {/* {stopwatchRunning && <Button onClick={pauseStopwatch}>Pause</Button>} */}
         {/* {(hour!=0||minute!=0||second!=0) && <Button onClick={lapStopwatch}>lap</Button>} */}
@@ -170,14 +170,14 @@ const Stopwatch = () => {
       </div>
       <div className="mt-4">
       {checkpoints.map((ele, index) => (
-        <div key={index + 1} className="flex justify-center items-center text-xs  ">
+        <div key={index + 1} className="flex justify-center items-center text-sm  ">
           <h3 className="mr-20">{checkpoints.length-index }</h3>
           <h1>{ele}</h1>
         </div>
       ))}
       </div>
-      <div className="mt-8">
-      <img className="rounded-lg" src="https://qph.cf2.quoracdn.net/main-qimg-a381019170e22776adb2099a1b4f34ff-lq"/>
+      <div className="mt-8 flex justify-center">
+      <img className="rounded-lg " src="https://qph.cf2.quoracdn.net/main-qimg-a381019170e22776adb2099a1b4f34ff-lq"/>
       </div>
     </div>
   );
