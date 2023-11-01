@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import History from './components/History'
 import Stopwatch from './components/Stopwatch'
-import Images from './components/images'
+import Images from './components/Images'
 
 // import Stopwatch1 from './components/Stopwatch1'
 
