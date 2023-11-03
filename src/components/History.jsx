@@ -29,7 +29,7 @@ const History = ({count}) => {
           </div>
         ))}
       {popup && <div className="">
-        <div className="absolute bottom-[120px] p-5 rounded-lg border-2  shadow-[0_35px_400px_rgba(0,0,0,1)] bg-white">
+        <div className="absolute bottom-[0px] text-center p-5 ml-auto mr-auto left-0 right-0 rounded-lg border-2  shadow-[0_35px_400px_rgba(0,0,0,1)] bg-white">
         <div className="text-xl">You want to delete all History</div>
         <div className="mt-6">
           <Button onClick={()=>{setPopup(false);clearAll()}} >OK</Button>
