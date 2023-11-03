@@ -14,7 +14,7 @@ const History = ({count}) => {
     let history=JSON.parse(localStorage.getItem("prevItems"))||[];
     useEffect(()=>{setHistoryData(JSON.parse(localStorage.getItem("prevItems"))||[])},[count])
   return (
-    <div className=" mt-12 relative">
+    <div className=" mt-12 relative ">
       {historyData.length != 0 &&
         historyData.map((ele, index) => (
           <div key={index}>
@@ -28,14 +28,16 @@ const History = ({count}) => {
             </div>
           </div>
         ))}
-      {popup && <div className="absolute bottom-[120px] p-5 rounded-lg border-2  shadow-[0_5px_15px_rgba(4,59,92,0.75)] bg-white">
+      {popup && <div className="">
+        <div className="absolute bottom-[120px] p-5 rounded-lg border-2  shadow-[0_35px_400px_rgba(0,0,0,1)] bg-white">
         <div className="text-xl">You want to delete all History</div>
         <div className="mt-6">
           <Button onClick={()=>{setPopup(false);clearAll()}} >OK</Button>
           <Button onClick={()=>{setPopup(false)}}>Cancel</Button>
         </div>
+      </div>
       </div>}
-      { history.length!=0 && <div onClick={()=>{setPopup(true)}} className="bg-red-500 cursor-pointer text-white w-[100px] p-1 text-xl m-auto rounded-lg mt-12">Clear All</div>}
+      { history.length!=0 && <div onClick={()=>{setPopup(true)}} className="bg-red-500 cursor-pointer  text-white w-[100px] p-1 text-xl m-auto rounded-lg mt-12">Clear All</div>}
     </div>
   );
 };
