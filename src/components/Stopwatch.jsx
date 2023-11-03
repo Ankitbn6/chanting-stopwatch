@@ -13,6 +13,7 @@ const Stopwatch = ({count,setCount}) => {
   const [checkpoints, setCheckpoints] = useState(
     JSON.parse(localStorage.getItem("lapitem")) || []
   );
+  const [disableLap,setDisableLap]=useState(true);
   // const [history,setHistory]=useState(JSON.parse(localStorage.getItem("prevItems"))||[])
   const [prevHour, setPrevHour] = useState(0);
   const [prevMinute, setPrevMinute] = useState(0);
@@ -136,7 +137,32 @@ const Stopwatch = ({count,setCount}) => {
       data:JSON.parse(localStorage.getItem("lapitem"))
     }
     let history=JSON.parse(localStorage.getItem("prevItems"))||[];
-    history.unshift(historyItem)
+    let lapItems=JSON.parse(localStorage.getItem("lapitem"));
+    // history.unshift(historyItem)
+    // history.map((ele)=>{
+    //   if(ele.date==(new Date().toISOString().slice(0, 10))+"hi")
+    //   {console.log(lapItems.concat(ele.data));
+    //     ele.data=lapItems.concat(ele.data);
+    //     // return {...ele,data:lapItems.concat(ele.data)}}
+    //   }
+    // else
+    // {history.unshift(historyItem)
+    // return}
+  // })
+    if(history.length===0)
+    {history.push(historyItem)}
+    else if(history[0].date==(new Date().toISOString().slice(0, 10)))
+    {
+      history[0].data=lapItems.concat(history[0].data);
+    }
+    else if(history.length>=7)
+      {
+        console.log(history.length);
+        history.splice(6,(history.length)-6);
+        history.unshift(historyItem);
+      }
+    else
+      history.unshift(historyItem);
   // setHistory([historyItem]);
     localStorage.setItem("prevItems",JSON.stringify(history));
     refreshStopwatch();
@@ -161,7 +187,7 @@ const Stopwatch = ({count,setCount}) => {
   //   }, []);
   return (
     <div className="w-full">
-      <div className="border-blue-100 border-4 rounded-full h-[250px] w-[250px] m-auto flex items-center justify-center">
+      <div className=" shadow-[0_5px_15px_rgba(4,59,92,0.75)] rounded-full h-[250px] w-[250px] m-auto mb-8 flex items-center justify-center">
       <h1 className="text-5xl">
         {/* {hour < 10 ? "0" + hour : hour}:{minute < 10 ? "0" + minute : minute}: */}
         {/* {second < 10 ? "0" + second : second}  */}
@@ -188,7 +214,7 @@ const Stopwatch = ({count,setCount}) => {
       <img onClick={refreshStopwatch} src={stopwatchRunning?("src\image\icons8-pause-96.png"):"src\image\icons8-play-96.png"} />
       <img onClick={refreshStopwatch} src="src\image\icons8-flag-48.png" /> */}
       </div>
-      <div className="mt-4">
+      {(checkpoints.length!=0)&&<div className="mt-8 bg-blue-100 p-2  rounded-lg">
       {/* {checkpoints.map((ele, index) => (
         <div key={index + 1} className="flex justify-center items-center text-sm  ">
           <h3 className="mr-20">{checkpoints.length-index }</h3>
@@ -196,7 +222,7 @@ const Stopwatch = ({count,setCount}) => {
         </div>
       ))} */}
       {checkpoints.map((ele,index)=><TimeItem data={checkpoints} ele={ele} key={index+1} index={index}/>)}
-      </div>
+      </div>}
       {(checkpoints.length!=0)&&(<div className="mt-12">
         <Button onClick={saveAndRefresh}>Save & Refresh</Button>
       </div>)}
