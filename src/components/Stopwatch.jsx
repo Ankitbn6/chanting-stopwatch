@@ -150,19 +150,33 @@ const Stopwatch = ({count,setCount}) => {
     // return}
   // })
     if(history.length===0)
-    {history.push(historyItem)}
+    {
+      let historyItem={
+      date:new Date().toISOString().slice(0, 10),
+      data:JSON.parse(localStorage.getItem("lapitem"))
+    }
+      history.push(historyItem)}
     else if(history[0].date==(new Date().toISOString().slice(0, 10)))
     {
       history[0].data=lapItems.concat(history[0].data);
     }
     else if(history.length>=7)
       {
-        console.log(history.length);
+        // console.log(history.length);
         history.splice(6,(history.length)-6);
+        let historyItem={
+          date:new Date().toISOString().slice(0, 10),
+          data:JSON.parse(localStorage.getItem("lapitem"))
+        }
         history.unshift(historyItem);
       }
     else
-      history.unshift(historyItem);
+      {
+        let historyItem={
+          date:new Date().toISOString().slice(0, 10),
+          data:JSON.parse(localStorage.getItem("lapitem"))
+        }
+        history.unshift(historyItem);}
   // setHistory([historyItem]);
     localStorage.setItem("prevItems",JSON.stringify(history));
     refreshStopwatch();
