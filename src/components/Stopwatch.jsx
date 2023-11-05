@@ -10,10 +10,11 @@ const Stopwatch = ({count,setCount}) => {
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
   const [stopwatchRunning, setStopwatchRunning] = useState(false);
+  const [lock,setLock]=useState(false);
   const [checkpoints, setCheckpoints] = useState(
     JSON.parse(localStorage.getItem("lapitem")) || []
   );
-  const [disableLap,setDisableLap]=useState(true);
+  const [disableBtn,setDisableBtn]=useState(false);
   // const [history,setHistory]=useState(JSON.parse(localStorage.getItem("prevItems"))||[])
   const [prevHour, setPrevHour] = useState(0);
   const [prevMinute, setPrevMinute] = useState(0);
@@ -66,6 +67,8 @@ const Stopwatch = ({count,setCount}) => {
   const startStopwatch = () => {
     if (!stopwatchRunning) {
       setStopwatchRunning(true);
+      setLock(false);
+      setDisableBtn(false);
       // setTimeout(()=>{setpaused(false)},100);
       // startSecond();
       // startMinute();
@@ -132,8 +135,11 @@ const Stopwatch = ({count,setCount}) => {
     localStorage.setItem("lapitem",JSON.stringify(checkpoints));
   }
   const saveAndRefresh=()=>{
+    let myDate=new Date();
+    let todayDate=myDate.toDateString();
+    // console.log(myDate.toLocaleString())
     let historyItem={
-      date:new Date().toISOString().slice(0, 10),
+      date:todayDate,
       data:JSON.parse(localStorage.getItem("lapitem"))
     }
     let history=JSON.parse(localStorage.getItem("prevItems"))||[];
@@ -151,12 +157,8 @@ const Stopwatch = ({count,setCount}) => {
   // })
     if(history.length===0)
     {
-      let historyItem={
-      date:new Date().toISOString().slice(0, 10),
-      data:JSON.parse(localStorage.getItem("lapitem"))
-    }
       history.push(historyItem)}
-    else if(history[0].date==(new Date().toISOString().slice(0, 10)))
+    else if(history[0].date==todayDate)
     {
       history[0].data=lapItems.concat(history[0].data);
     }
@@ -164,18 +166,10 @@ const Stopwatch = ({count,setCount}) => {
       {
         // console.log(history.length);
         history.splice(6,(history.length)-6);
-        let historyItem={
-          date:new Date().toISOString().slice(0, 10),
-          data:JSON.parse(localStorage.getItem("lapitem"))
-        }
         history.unshift(historyItem);
       }
     else
       {
-        let historyItem={
-          date:new Date().toISOString().slice(0, 10),
-          data:JSON.parse(localStorage.getItem("lapitem"))
-        }
         history.unshift(historyItem);}
   // setHistory([historyItem]);
     localStorage.setItem("prevItems",JSON.stringify(history));
@@ -200,8 +194,12 @@ const Stopwatch = ({count,setCount}) => {
   //     return cleanup;
   //   }, []);
   return (
-    <div className="w-full">
-      <div className=" shadow-[0_5px_15px_rgba(4,59,92,0.75)] rounded-full h-[250px] w-[250px] m-auto mb-8 flex items-center justify-center">
+    <div className="w-full relative">
+    <div className='absolute w-full flex justify-end top-[0px]'>
+        {lock &&stopwatchRunning && <img className="w-[30px]" onClick={()=>{setLock(false);setDisableBtn(false)}} src="src\image\icons8-lock-50.png"/>}
+        {!lock &&stopwatchRunning && <img className="w-[30px]" onClick={()=>{setLock(true);setDisableBtn(true)}} src="src\image\icons8-unlock-50.png"/>}
+      </div>
+      <div className=" shadow-[0_5px_15px_rgba(4,59,92,0.75)] rounded-full h-[250px] w-[250px] m-auto mb-5 flex items-center justify-center">
       <h1 className="text-5xl">
         {/* {hour < 10 ? "0" + hour : hour}:{minute < 10 ? "0" + minute : minute}: */}
         {/* {second < 10 ? "0" + second : second}  */}
@@ -209,20 +207,20 @@ const Stopwatch = ({count,setCount}) => {
       </h1>
       </div>
       <br />
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-4 ">
         {/* {(hour!=0||minute!=0||second!=0) && <Button onClick={refreshStopwatch}>Refresh</Button>} */}
         {/* {stopwatchRunning && <Button onClick={pauseStopwatch}>Pause</Button>} */}
         {/* {(hour!=0||minute!=0||second!=0) && <Button onClick={lapStopwatch}>lap</Button>} */}
         {(hour != 0 || minute != 0 || second != 0) && (
-          <Button onClick={refreshStopwatch}>Refresh</Button>
+          <Button onClick={refreshStopwatch} disabled={disableBtn}>Refresh</Button>
         )}
         {/* <Button  onClick={refreshStopwatch}>Refresh</Button> */}
-        <Button onClick={stopwatchRunning ? pauseStopwatch : startStopwatch}>
+        <Button onClick={stopwatchRunning ? pauseStopwatch : startStopwatch} disabled={disableBtn && stopwatchRunning}>
           {stopwatchRunning ? "Pause" : "Play"}
         </Button>
         {/* <Button onClick={lapStopwatch} disabled={hour===0&&minute===0&&second===0}>lap</Button> */}
         {(hour != 0 || minute != 0 || second != 0) && (
-          <Button onClick={lapStopwatch}>lap</Button>
+          <Button onClick={lapStopwatch} disabled={disableBtn}>lap</Button>
         )}
         {/* <img onClick={refreshStopwatch} src="src\image\icons8-refresh-96.png" />
       <img onClick={refreshStopwatch} src={stopwatchRunning?("src\image\icons8-pause-96.png"):"src\image\icons8-play-96.png"} />
@@ -238,7 +236,7 @@ const Stopwatch = ({count,setCount}) => {
       {checkpoints.map((ele,index)=><TimeItem data={checkpoints} ele={ele} key={index+1} index={index}/>)}
       </div>}
       {(checkpoints.length!=0)&&(<div className="mt-12">
-        <Button onClick={saveAndRefresh}>Save & Refresh</Button>
+        <Button onClick={saveAndRefresh} disabled={disableBtn}>Save & Refresh</Button>
       </div>)}
       {/* <div className="mt-8 flex justify-center"> */}
       {/* <img className="rounded-lg " src="https://qph.cf2.quoracdn.net/main-qimg-a381019170e22776adb2099a1b4f34ff-lq"/> */}

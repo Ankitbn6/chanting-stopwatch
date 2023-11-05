@@ -2,7 +2,7 @@ import React from 'react'
 
 const Button = ({onClick,children,disabled}) => {
   return (
-    <button disabled={disabled} className='border-2 rounded-xl border-blue-200 p-2 text-[22px] ml-2 active:text-white active:bg-blue-500 ' onClick={onClick}>{children}</button>
+    <button disabled={disabled} className='active:border-2 rounded-xl active:border-blue-900 box-border text-white bg-blue-600 p-2 text-[22px] ml-2 active:text-black active:bg-white disabled:bg-black  ' onClick={onClick}>{children}</button>
   )
 }
 
