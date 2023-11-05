@@ -195,9 +195,9 @@ const Stopwatch = ({count,setCount}) => {
   //   }, []);
   return (
     <div className="w-full relative">
-    <div className='absolute w-full flex justify-end top-[0px]'>
-        {lock &&stopwatchRunning && <img className="w-[30px]" onClick={()=>{setLock(false);setDisableBtn(false)}} src="src\image\icons8-lock-50.png"/>}
-        {!lock &&stopwatchRunning && <img className="w-[30px]" onClick={()=>{setLock(true);setDisableBtn(true)}} src="src\image\icons8-unlock-50.png"/>}
+    <div className='absolute w-full flex justify-end top-[0px] right-4'>
+        {lock &&stopwatchRunning && <img className="w-[20px]" onClick={()=>{setLock(false);setDisableBtn(false)}} src="https://img.icons8.com/?size=256&id=2862&format=png"/>}
+        {!lock &&stopwatchRunning && <img className="w-[20px]" onClick={()=>{setLock(true);setDisableBtn(true)}} src="https://img.icons8.com/?size=256&id=3721&format=png"/>}
       </div>
       <div className=" shadow-[0_5px_15px_rgba(4,59,92,0.75)] rounded-full h-[250px] w-[250px] m-auto mb-5 flex items-center justify-center">
       <h1 className="text-5xl">
