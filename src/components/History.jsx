@@ -1,8 +1,9 @@
 // import React from 'react'
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TimeItem from "./TimeItem";
 import Button from "./Button";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 const History = ({count}) => {
     const [historyData,setHistoryData]=useState([]);
@@ -13,15 +14,26 @@ const History = ({count}) => {
     }
     let history=JSON.parse(localStorage.getItem("prevItems"))||[];
     useEffect(()=>{setHistoryData(JSON.parse(localStorage.getItem("prevItems"))||[])},[count])
+    const [theme]=useContext(ThemeContext);
+  const styles = {
+    dark: {
+      background: "black",
+      color: "white"
+    },
+    light: {
+      background: "white",
+      color: "black"
+    },
+  };
   return (
-    <div className=" mt-12 relative ">
+    <div style={styles[theme]} className=" mt-12 relative ">
       {historyData.length != 0 &&
         historyData.map((ele, index) => (
           <div key={index}>
             <div className=" bg-blue-500 rounded-lg p-2 text-white mt-2 text-2xl">
               {ele.date}
             </div>
-            <div className="bg-blue-100 p-2 m-2 rounded-lg">
+            <div style={styles[theme]} className="bg-blue-100 p-2 m-2 rounded-lg">
               {ele.data.map((el, ind) => (
                 <TimeItem ele={el} index={ind} data={ele.data} key={ind+1}/>
               ))}

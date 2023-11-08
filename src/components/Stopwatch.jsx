@@ -1,6 +1,7 @@
-import { useEffect,useState } from "react";
+import { useContext, useEffect,useState } from "react";
 import Button from "./Button";
 import TimeItem from "./TimeItem";
+import { ThemeContext } from "../contexts/ThemeContext";
 // let hourId;
 // let minuteID;
 // let secondID;
@@ -193,14 +194,27 @@ const Stopwatch = ({count,setCount}) => {
   //     startHour();
   //     return cleanup;
   //   }, []);
+  const [theme]=useContext(ThemeContext)
+  const styles = {
+    dark: {
+      background: "black",
+      color: "white"
+    },
+    light: {
+      background: "white",
+      color: "black"
+    },
+  };
   return (
-    <div className="w-full relative">
+    <div style={styles[theme]}  className="w-full relative">
     <div className='absolute w-full flex justify-end top-[0px] right-4'>
-        {lock &&stopwatchRunning && <img className="w-[20px]" onClick={()=>{setLock(false);setDisableBtn(false)}} src="https://img.icons8.com/?size=256&id=2862&format=png"/>}
-        {!lock &&stopwatchRunning && <img className="w-[20px]" onClick={()=>{setLock(true);setDisableBtn(true)}} src="https://img.icons8.com/?size=256&id=3721&format=png"/>}
+        {(theme==="light")&&lock &&stopwatchRunning && <img className="w-[20px]" onClick={()=>{setLock(false);setDisableBtn(false)}} src="https://img.icons8.com/?size=256&id=2862&format=png"/>}
+        {(theme==="light")&&!lock &&stopwatchRunning && <img className="w-[20px]" onClick={()=>{setLock(true);setDisableBtn(true)}} src="https://img.icons8.com/?size=256&id=3721&format=png"/>}
+        {(theme==="dark")&&!lock &&stopwatchRunning && <img className="w-[20px]" onClick={()=>{setLock(true);setDisableBtn(true)}} src="/src/image/icons8-unlock-50.png"/>}
+        {(theme==="dark")&&lock &&stopwatchRunning && <img className="w-[20px]" onClick={()=>{setLock(false);setDisableBtn(false)}} src="/src/image/icons8-lock-50.png"/>}
       </div>
       <div className=" shadow-[0_5px_15px_rgba(4,59,92,0.75)] rounded-full h-[250px] w-[250px] m-auto mb-5 flex items-center justify-center">
-      <h1 className="text-5xl">
+      <h1  className="text-5xl">
         {/* {hour < 10 ? "0" + hour : hour}:{minute < 10 ? "0" + minute : minute}: */}
         {/* {second < 10 ? "0" + second : second}  */}
         {str}
@@ -226,7 +240,7 @@ const Stopwatch = ({count,setCount}) => {
       <img onClick={refreshStopwatch} src={stopwatchRunning?("src\image\icons8-pause-96.png"):"src\image\icons8-play-96.png"} />
       <img onClick={refreshStopwatch} src="src\image\icons8-flag-48.png" /> */}
       </div>
-      {(checkpoints.length!=0)&&<div className="mt-8 bg-blue-100 p-2  rounded-lg">
+      {(checkpoints.length!=0)&&<div style={styles[theme]} className="mt-8 bg-blue-100 p-2  rounded-lg">
       {/* {checkpoints.map((ele, index) => (
         <div key={index + 1} className="flex justify-center items-center text-sm  ">
           <h3 className="mr-20">{checkpoints.length-index }</h3>
@@ -235,7 +249,7 @@ const Stopwatch = ({count,setCount}) => {
       ))} */}
       {checkpoints.map((ele,index)=><TimeItem data={checkpoints} ele={ele} key={index+1} index={index}/>)}
       </div>}
-      {(checkpoints.length!=0)&&(<div className="mt-12">
+      {(checkpoints.length!=0)&&(<div  className="mt-12">
         <Button onClick={saveAndRefresh} disabled={disableBtn}>Save & Refresh</Button>
       </div>)}
       {/* <div className="mt-8 flex justify-center"> */}

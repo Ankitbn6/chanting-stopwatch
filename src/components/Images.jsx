@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const Images = () => {
     let i=0;
@@ -15,10 +15,11 @@ const Images = () => {
         },3000)
     }
     useEffect(slideShow,[]);
+    
   return (
     <div>
       {/* <div><img className='rounded-lg m-auto mt-12 ' src='https://image.spreadshirtmedia.net/image-server/v1/products/T1459A839PA4459PT28D181712048W6534H10000/views/1,width=550,height=550,appearanceId=839,backgroundColor=F2F2F2/hare-krishna-maha-mantra-sticker.jpg'/></div> */}
-      <div><img className="rounded-xl m-auto mb-[60px] mt-5 w-[300px] h-[180px] " src={source}/></div>
+      <div><img  className="rounded-xl m-auto mb-[40px] mt-5 w-[300px] h-[180px] " src={source}/></div>
     </div>
   )
 }
