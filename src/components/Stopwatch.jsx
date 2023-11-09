@@ -2,9 +2,6 @@ import { useContext, useEffect,useState } from "react";
 import Button from "./Button";
 import TimeItem from "./TimeItem";
 import { ThemeContext } from "../contexts/ThemeContext";
-// let hourId;
-// let minuteID;
-// let secondID;
 let watchID;
 const Stopwatch = ({count,setCount}) => {
   const [hour, setHour] = useState(0);
@@ -16,33 +13,15 @@ const Stopwatch = ({count,setCount}) => {
     JSON.parse(localStorage.getItem("lapitem")) || []
   );
   const [disableBtn,setDisableBtn]=useState(false);
-  // const [history,setHistory]=useState(JSON.parse(localStorage.getItem("prevItems"))||[])
   const [prevHour, setPrevHour] = useState(0);
   const [prevMinute, setPrevMinute] = useState(0);
   const [prevSecond, setPrevSecond] = useState(0);
-  // const [paused,setpaused]=useState(false);
-  // const [str,setStr]=useState((hour < 10 ? ("0" + hour) : hour)+":"+(minute < 10 ? "0" + minute : minute)+":"+
-  // (second < 10 ? ("0" + second ): second))
   let str =
     (hour < 10 ? "0" + hour : hour) +
     ":" +
     (minute < 10 ? "0" + minute : minute) +
     ":" +
     (second < 10 ? "0" + second : second);
-  // const startHour = () => {
-  //   hourId = setInterval(() => {
-  //     setHour((prev) => prev + 1);
-  //   }, 60000*(60));
-  // };
-  // const startMinute = () => {
-  //   minuteID = setInterval(() => {
-  //     setMinute((prev) => {
-  //       if (prev === 60) return 0;
-  //       else return prev + 1;
-  //     });
-  //   }, 1000*(60));
-  // };
-
   const startWatch = () => {
     watchID = setInterval(() => {
       setSecond((prev) => {
@@ -60,9 +39,6 @@ const Stopwatch = ({count,setCount}) => {
     }, 1000);
   };
   const cleanup = () => {
-    // clearInterval(hourId);
-    // clearInterval(minuteID);
-    // clearInterval(secondID);
     clearInterval(watchID);
   };
   const startStopwatch = () => {
@@ -70,19 +46,11 @@ const Stopwatch = ({count,setCount}) => {
       setStopwatchRunning(true);
       setLock(false);
       setDisableBtn(false);
-      // setTimeout(()=>{setpaused(false)},100);
-      // startSecond();
-      // startMinute();
-      // startHour();
       startWatch();
     }
   };
   const pauseStopwatch = () => {
     setStopwatchRunning(false);
-    // setpaused(true);
-    // let hourP=hour;
-    // let minuteP=minute;
-    // let SecondP=second;
     cleanup();
   };
   const refreshStopwatch = () => {
@@ -97,12 +65,8 @@ const Stopwatch = ({count,setCount}) => {
     let time = "00:00:00";
     localStorage.setItem("str", JSON.stringify(time));
     localStorage.setItem("lapitem", JSON.stringify([]));
-    // cleanup();
   };
   const lapStopwatch = () => {
-    // const str=hour+":"+
-    // setLap(str);
-    // checkpoints.push(str);
     let curSecond = second;
     let curMinute = minute;
     let curHour = hour;
@@ -114,9 +78,6 @@ const Stopwatch = ({count,setCount}) => {
     let hr = diff % 3600;
     diffMinute = Math.trunc(hr / 60);
     diffSecond = hr % 60;
-    // diffSecond=(prevSecond>curSecond?(60-(prevSecond)+curSecond):curSecond-prevSecond);
-    // diffMinute=(prevMinute>curMinute && curMinute?(60-(prevMinute)+curMinute):curMinute-prevMinute);
-    // diffHour=curHour-prevHour;
     let diffStr =
       (diffHour < 10 ? "0" + diffHour : diffHour) +
       ":" +
@@ -128,8 +89,6 @@ const Stopwatch = ({count,setCount}) => {
     setPrevSecond(second);
     setCheckpoints([diffStr,...checkpoints]);
     storeLocally();
-    // localStorage.setItem("str", JSON.stringify(str));
-    // localStorage.setItem("lapitem", JSON.stringify(checkpoints));
   };
   const storeLocally=()=>{
     localStorage.setItem("str",JSON.stringify(str));
@@ -138,24 +97,12 @@ const Stopwatch = ({count,setCount}) => {
   const saveAndRefresh=()=>{
     let myDate=new Date();
     let todayDate=myDate.toDateString();
-    // console.log(myDate.toLocaleString())
     let historyItem={
       date:todayDate,
       data:JSON.parse(localStorage.getItem("lapitem"))
     }
     let history=JSON.parse(localStorage.getItem("prevItems"))||[];
     let lapItems=JSON.parse(localStorage.getItem("lapitem"));
-    // history.unshift(historyItem)
-    // history.map((ele)=>{
-    //   if(ele.date==(new Date().toISOString().slice(0, 10))+"hi")
-    //   {console.log(lapItems.concat(ele.data));
-    //     ele.data=lapItems.concat(ele.data);
-    //     // return {...ele,data:lapItems.concat(ele.data)}}
-    //   }
-    // else
-    // {history.unshift(historyItem)
-    // return}
-  // })
     if(history.length===0)
     {
       history.push(historyItem)}
@@ -165,14 +112,12 @@ const Stopwatch = ({count,setCount}) => {
     }
     else if(history.length>=7)
       {
-        // console.log(history.length);
         history.splice(6,(history.length)-6);
         history.unshift(historyItem);
       }
     else
       {
         history.unshift(historyItem);}
-  // setHistory([historyItem]);
     localStorage.setItem("prevItems",JSON.stringify(history));
     refreshStopwatch();
     setCount(count+1);
@@ -184,16 +129,6 @@ const Stopwatch = ({count,setCount}) => {
     if(localStorage.getItem("prevItems") === null)
     localStorage.setItem("prevItems",JSON.stringify([]));
   },[])
-
-  // useEffect(()=>{
-  //   setStr(JSON.parse(localStorage.getItem("str")));
-  // },[])
-  //   useEffect(() => {
-  //     startSecond();
-  //     startMinute();
-  //     startHour();
-  //     return cleanup;
-  //   }, []);
   const [theme]=useContext(ThemeContext)
   const styles = {
     dark: {
@@ -205,57 +140,43 @@ const Stopwatch = ({count,setCount}) => {
       color: "black"
     },
   };
+  const shadow={
+    dark:{
+      boxShadow:"rgba(255, 255, 255) 0px 2px 15px 10px"
+    },
+    light:{
+      boxShadow:"rgba(4, 59, 92) 0px 5px 15px 10px"
+    },
+  }
   return (
-    <div style={styles[theme]}  className="w-full relative">
+    <div style={styles[theme]}  className="w-full relative pt-8">
     <div className='absolute w-full flex justify-end top-[0px] right-4'>
-        {(theme==="light")&&lock &&stopwatchRunning && <img className="w-[20px]" onClick={()=>{setLock(false);setDisableBtn(false)}} src="https://img.icons8.com/?size=256&id=2862&format=png"/>}
-        {(theme==="light")&&!lock &&stopwatchRunning && <img className="w-[20px]" onClick={()=>{setLock(true);setDisableBtn(true)}} src="https://img.icons8.com/?size=256&id=3721&format=png"/>}
-        {(theme==="dark")&&!lock &&stopwatchRunning && <img className="w-[20px]" onClick={()=>{setLock(true);setDisableBtn(true)}} src="/src/image/icons8-unlock-50.png"/>}
-        {(theme==="dark")&&lock &&stopwatchRunning && <img className="w-[20px]" onClick={()=>{setLock(false);setDisableBtn(false)}} src="/src/image/icons8-lock-50.png"/>}
-      </div>
-      <div className=" shadow-[0_5px_15px_rgba(4,59,92,0.75)] rounded-full h-[250px] w-[250px] m-auto mb-5 flex items-center justify-center">
-      <h1  className="text-5xl">
-        {/* {hour < 10 ? "0" + hour : hour}:{minute < 10 ? "0" + minute : minute}: */}
-        {/* {second < 10 ? "0" + second : second}  */}
-        {str}
+        {lock &&(hour != 0 || minute != 0 || second != 0) && <img className="w-[20px]" onClick={()=>{setLock(false);setDisableBtn(false)}} src={(theme==="light")?"/src/image/icons8-lock-boldBlue-50.png":"/src/image/icons8-lock-50.png"}/>}
+        {!lock &&(hour != 0 || minute != 0 || second != 0) && <img className="w-[20px]" onClick={()=>{setLock(true);setDisableBtn(true)}} src={(theme==="light")?"/src/image/icons8-unlock-boldBlue-50.png":"/src/image/icons8-unlock-white-50.png"}/>}
+        </div>
+      <div style={shadow[theme]} className="  rounded-full h-[250px] w-[250px] m-auto mb-5  flex items-center justify-center">
+      <h1  className="text-5xl">{str}
       </h1>
       </div>
       <br />
-      <div className="flex justify-center mt-4 ">
-        {/* {(hour!=0||minute!=0||second!=0) && <Button onClick={refreshStopwatch}>Refresh</Button>} */}
-        {/* {stopwatchRunning && <Button onClick={pauseStopwatch}>Pause</Button>} */}
-        {/* {(hour!=0||minute!=0||second!=0) && <Button onClick={lapStopwatch}>lap</Button>} */}
-        {(hour != 0 || minute != 0 || second != 0) && (
+      <div className="flex justify-center mt-4 ">{(hour != 0 || minute != 0 || second != 0) && (
           <Button onClick={refreshStopwatch} disabled={disableBtn}>Refresh</Button>
         )}
-        {/* <Button  onClick={refreshStopwatch}>Refresh</Button> */}
-        <Button onClick={stopwatchRunning ? pauseStopwatch : startStopwatch} disabled={disableBtn && stopwatchRunning}>
+        <Button onClick={stopwatchRunning ? pauseStopwatch : startStopwatch} disabled={disableBtn }>
           {stopwatchRunning ? "Pause" : "Play"}
         </Button>
-        {/* <Button onClick={lapStopwatch} disabled={hour===0&&minute===0&&second===0}>lap</Button> */}
         {(hour != 0 || minute != 0 || second != 0) && (
           <Button onClick={lapStopwatch} disabled={disableBtn}>lap</Button>
         )}
-        {/* <img onClick={refreshStopwatch} src="src\image\icons8-refresh-96.png" />
-      <img onClick={refreshStopwatch} src={stopwatchRunning?("src\image\icons8-pause-96.png"):"src\image\icons8-play-96.png"} />
-      <img onClick={refreshStopwatch} src="src\image\icons8-flag-48.png" /> */}
-      </div>
-      {(checkpoints.length!=0)&&<div style={styles[theme]} className="mt-8 bg-blue-100 p-2  rounded-lg">
-      {/* {checkpoints.map((ele, index) => (
-        <div key={index + 1} className="flex justify-center items-center text-sm  ">
-          <h3 className="mr-20">{checkpoints.length-index }</h3>
-          <h1>{ele}</h1>
         </div>
-      ))} */}
+      {(checkpoints.length!=0)&&<div style={styles[theme]} className="mt-8 bg-blue-100 p-2  rounded-lg">
+      
       {checkpoints.map((ele,index)=><TimeItem data={checkpoints} ele={ele} key={index+1} index={index}/>)}
       </div>}
       {(checkpoints.length!=0)&&(<div  className="mt-12">
         <Button onClick={saveAndRefresh} disabled={disableBtn}>Save & Refresh</Button>
       </div>)}
-      {/* <div className="mt-8 flex justify-center"> */}
-      {/* <img className="rounded-lg " src="https://qph.cf2.quoracdn.net/main-qimg-a381019170e22776adb2099a1b4f34ff-lq"/> */}
-      {/* </div> */}
-    </div>
+      </div>
   );
 };
 
