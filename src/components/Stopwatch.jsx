@@ -151,8 +151,8 @@ const Stopwatch = ({count,setCount}) => {
   return (
     <div style={styles[theme]}  className="w-full relative pt-8">
     <div className='absolute w-full flex justify-end top-[0px] right-4'>
-        {lock &&(hour != 0 || minute != 0 || second != 0) && <img className="w-[20px]" onClick={()=>{setLock(false);setDisableBtn(false)}} src={(theme==="light")?"/src/image/icons8-lock-boldBlue-50.png":"/src/image/icons8-lock-50.png"}/>}
-        {!lock &&(hour != 0 || minute != 0 || second != 0) && <img className="w-[20px]" onClick={()=>{setLock(true);setDisableBtn(true)}} src={(theme==="light")?"/src/image/icons8-unlock-boldBlue-50.png":"/src/image/icons8-unlock-white-50.png"}/>}
+        {lock &&(hour != 0 || minute != 0 || second != 0) && <img className="w-[20px]" onClick={()=>{setLock(false);setDisableBtn(false)}} src={(theme==="light")?"https://img.icons8.com/?size=256&id=2862&format=png":"https://png.pngtree.com/png-vector/20190508/ourmid/pngtree-vector-lock-icon-png-image_1028350.jpg"}/>}
+        {!lock &&(hour != 0 || minute != 0 || second != 0) && <img className="w-[20px]" onClick={()=>{setLock(true);setDisableBtn(true)}} src={(theme==="light")?"https://img.icons8.com/?size=256&id=3721&format=png":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSVQRVXtg3G-WKJwiMw7LCJwxl91WJIqpK3w&usqp=CAU"}/>}
         </div>
       <div style={shadow[theme]} className="  rounded-full h-[250px] w-[250px] m-auto mb-5  flex items-center justify-center">
       <h1  className="text-5xl">{str}

@@ -30,13 +30,13 @@ function App() {
           <img
             onClick={toggleTheme}
             className="w-[30px]"
-            src="/src/image/icons8-sun-lightWhite-50.png"
+            src="https://content.mycutegraphics.com/graphics/letter/sun-for-lettter-s-black-white.png"
           />
         ) : (
           <img
             onClick={toggleTheme}
             className="w-[30px]"
-            src="/src/image/icons8-dark-mode-60.png"
+            src="https://img.icons8.com/?size=256&id=59841&format=png"
           />
         )}
       </div>
@@ -44,15 +44,14 @@ function App() {
       <div>
         <img
           className="rounded-lg m-auto mt-[80px] "
-          // src="https://www.harekrishnajapa.com/wp-content/wallpapers/eight_line_wallpapers/print_quality/Hare-Krishna-Maha-Mantra-Eight-Line-584.jpg"
-          src="/src/image/Hare-Krishna-Maha-Mantra.jpg"
+          src="https://www.harekrishnajapa.com/wp-content/wallpapers/eight_line_wallpapers/print_quality/Hare-Krishna-Maha-Mantra-Eight-Line-584.jpg"
         />
       </div>
       <History count={count} />
       <div>
         <img
           className="rounded-lg m-auto mt-12 "
-          src="/src/image/Prabhupada.jpg"
+          src="https://www.mayapur.com/wp-content/uploads/2016/05/12-4-1024x683.jpg"
         />
       </div>
     </div>
