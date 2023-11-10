@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import TimeItem from "./TimeItem";
 import Button from "./Button";
 import { ThemeContext } from "../contexts/ThemeContext";
+import HistoryAccordian from "./HistoryAccordian";
 
 const History = ({count}) => {
     const [historyData,setHistoryData]=useState([]);
@@ -29,7 +30,8 @@ const History = ({count}) => {
     <div style={styles[theme]} className=" mt-12 relative ">
       {historyData.length != 0 &&
         historyData.map((ele, index) => (
-          <div key={index}>
+          <HistoryAccordian ele={ele} index={index} key={index} />
+          /* <div key={index}>
             <div className=" bg-blue-500 rounded-lg p-2 text-white mt-2 text-2xl">
               {ele.date}
             </div>
@@ -38,7 +40,7 @@ const History = ({count}) => {
                 <TimeItem ele={el} index={ind} data={ele.data} key={ind+1}/>
               ))}
             </div>
-          </div>
+          </div> */
         ))}
       {popup && <div className="">
         <div className="absolute bottom-[0px] text-center p-5 ml-auto mr-auto left-0 right-0 rounded-lg border-2  shadow-[0_35px_400px_rgba(0,0,0,1)] bg-white">
